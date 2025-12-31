@@ -2,18 +2,18 @@ from typing import cast
 
 import structlog
 
-from .keyboard import alternatives_keyboard
-from .query import Query
-from .scryfall import service as scryfall
-from .telegram import client as tg_client
-from .telegram.models import (
+from scryfall_telegram.keyboard import alternatives_keyboard
+from scryfall_telegram.query import Query
+from scryfall_telegram.scryfall import service as scryfall
+from scryfall_telegram.telegram import client as tg_client
+from scryfall_telegram.telegram.models import (
     CallbackQuery,
     EditMessageMedia,
     EditMessageReplyMarkup,
     InputMediaPhoto,
     Message,
 )
-from .textmessage import _textify_prices
+from scryfall_telegram.textmessage import _textify_prices
 
 log = structlog.get_logger()
 

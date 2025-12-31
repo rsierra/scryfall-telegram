@@ -5,7 +5,7 @@ import structlog
 
 
 def setup_logging(**context):
-    min_level = logging.DEBUG if os.environ["STAGE"] == "staging" else logging.WARNING
+    min_level = logging.DEBUG if os.environ["ENV"] == "stag" else logging.WARNING
 
     structlog.configure_once(
         processors=[

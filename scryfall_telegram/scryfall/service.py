@@ -5,8 +5,8 @@ import orjson
 import structlog
 from pyxdameraulevenshtein import damerau_levenshtein_distance
 
-from .client import cached_scryfall_client
-from .models import Card, Face
+from scryfall_telegram.scryfall.client import cached_scryfall_client
+from scryfall_telegram.scryfall.models import Card, Face
 
 log = structlog.get_logger()
 

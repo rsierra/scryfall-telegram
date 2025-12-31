@@ -3,17 +3,17 @@ from typing import cast
 import orjson
 import structlog
 
-from .callback import handle_callback_query
-from .inline import handle_inline_query
-from .logging import setup_logging
-from .telegram.models import TelegramUpdate
-from .textmessage import handle_message
+from scryfall_telegram.callback import handle_callback_query
+from scryfall_telegram.inline import handle_inline_query
+from scryfall_telegram.logging import setup_logging
+from scryfall_telegram.telegram.models import TelegramUpdate
+from scryfall_telegram.textmessage import handle_message
 
 log = structlog.get_logger()
 
 
 def handle_telegram_webhook(event, context):
-    setup_logging(request_id=event["requestContext"]["requestId"])
+    setup_logging()
     log.debug("got_update", data=event)
 
     update = cast(TelegramUpdate, orjson.loads(event["body"]))
@@ -36,4 +36,4 @@ def handle_telegram_webhook(event, context):
         handle_message(channel_msg)
 
     log.debug("success")
-    return orjson.dumps({"statusCode": 200})
+    return {"statusCode": 200}

@@ -1,9 +1,9 @@
 from textwrap import shorten
 from typing import Sequence
 
-from .query import Query
-from .scryfall.models import Card
-from .telegram.models import InlineKeyboardButton, InlineKeyboardMarkup
+from scryfall_telegram.query import Query
+from scryfall_telegram.scryfall.models import Card
+from scryfall_telegram.telegram.models import InlineKeyboardButton, InlineKeyboardMarkup
 
 
 def initial_suggest_keyboard(query: Query) -> InlineKeyboardMarkup:

@@ -1,7 +1,7 @@
-from .scryfall import service as scryfall
-from .scryfall.models import Card
-from .telegram import client as tg
-from .telegram.models import (
+from scryfall_telegram.scryfall import service as scryfall
+from scryfall_telegram.scryfall.models import Card
+from scryfall_telegram.telegram import client as tg
+from scryfall_telegram.telegram.models import (
     AnswerInlineQuery,
     InlineQuery,
     InlineQueryResultArticle,

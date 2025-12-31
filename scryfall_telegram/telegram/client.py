@@ -5,7 +5,7 @@ from typing import Any
 import requests
 import structlog
 
-from .models import (
+from scryfall_telegram.telegram.models import (
     AnswerInlineQuery,
     EditMessageMedia,
     EditMessageReplyMarkup,

@@ -7,3 +7,9 @@ node_modules/
 .coverage
 coverage.*
 .python-version
+.terraform
+.build
+*.zip
+*.tfvars
+*.backup
+*.tfstate

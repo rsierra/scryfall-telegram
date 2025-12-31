@@ -1,27 +1,25 @@
 [project]
 name = "scryfall-telegram"
 version = "2.5.1"
-description = "Telegram bot backed by the Scryfall.com Magic:The Gathering API. Runs Serverless."
+description = "Telegram bot backed by the Scryfall.com Magic:The Gathering API. Runs serverless."
 readme = "README.md"
 requires-python = ">= 3.13"
 authors = [{ name = "Oliver Hofkens", email = "oliver@hofkens.eu" }]
 dependencies = [
-    "pyxdameraulevenshtein>=1.9.0",
-    "requests>=2.32.5",
-    "structlog>=25.5.0",
+  "orjson>=3.11.5",
+  "pyxdameraulevenshtein>=1.9.0",
+  "requests>=2.32.5",
+  "structlog>=25.5.0",
 ]
 
 [dependency-groups]
 dev = ["pytest>=9.0.2", "pytest-cov>=7.0.0", "ruff>=0.14.10"]
 
 [tool.poe.tasks.lint]
-sequence = [
-    {cmd = "ruff check"},
-    {cmd = "ruff format --check"}
-]
+sequence = [{ cmd = "ruff check" }, { cmd = "ruff format --check" }]
 
 [tool.poe.tasks.test]
-env = { STAGE = "staging" }
+env = { ENV = "stag" }
 cmd = "pytest tests/unit/ tests/integration/"
 
 [tool.poe.tasks.package]
@@ -29,15 +27,20 @@ shell = """
 rm -rf .build
 mkdir .build
 cp -R scryfall_telegram/ .build/scryfall_telegram
-uv export --frozen --no-dev --no-editable -o .build/requirements.txt
-uv pip install \
-    --no-installer-metadata \
-    --no-compile-bytecode \
-    --python-platform x86_64-manylinux2014 \
-    --python 3.13 \
+uv export --frozen --no-dev --no-editable --no-emit-project -o .build/requirements.txt
+docker run --rm -v $(pwd):/home/app --workdir /home/app --platform linux/amd64 \
+    rg.fr-par.scw.cloud/scwfunctionsruntimes-public/python-dep:3.13 \
+    pip install \
     --target .build/package/ \
     -r .build/requirements.txt
 """
+
+[tool.poe.tasks.deploy]
+args = [{ name = "env", positional = true, default = "stag" }]
+sequence = [
+  { cmd = "terraform apply -state=$env.tfstate -var-file=$env.tfvars -var env=$env", cwd = "terraform" },
+  { cmd = "scripts/register_webhook.py $env" },
+]
 
 [tool.pytest]
 minversion = "9.0"
