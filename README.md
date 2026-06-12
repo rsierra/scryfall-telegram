@@ -68,3 +68,38 @@ This project uses [uv](https://docs.astral.sh/uv/) and
 - `poe lint`
 - `poe test`
 - `poe deploy`
+
+### Running Locally (Polling Mode)
+
+If you want to run the bot locally or on a VPS (e.g. Railway) without setting up Scaleway serverless webhooks, you can use the polling mode script:
+
+1. Set the `TELEGRAM_BOT_TOKEN` environment variable.
+2. Run the polling script:
+
+   ```bash
+   ENV=stag TELEGRAM_BOT_TOKEN="your_bot_token" uv run python polling.py
+   ```
+
+### UTILS COMMANDS FOR TEST
+
+- Telegram bot info
+
+<https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getWebhookInfo>
+
+- Set telegram bot service url
+
+<https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/setWebhook?url={SERVICE_URL}>
+
+- Reset telegram bot service url
+
+<https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/setWebhook?url=>
+
+- Send test message
+
+curl -X POST "<https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage>" \
+     -d "chat_id={CHAT_ID}" \
+     -d "text=test message"
+
+- Send query to serverless service
+
+curl -X POST "{SERVICE_URL}" -H "Content-Type: application/json" -d "{\"update_id\":123456789,\"message\":{\"message_id\":1,\"from\":{\"id\":2047430,\"is_bot\":false,\"first_name\":\"Ruben\",\"last_name\":\"Sierra\",\"username\":\"maguilag\"},\"chat\":{\"id\":2047430,\"first_name\":\"Ruben\",\"last_name\":\"Sierra\",\"username\":\"maguilag\",\"type\":\"private\"},\"date\":1610000000,\"text\":\"[[ Black Lotus ]]\"}}"
