@@ -16,6 +16,9 @@ def cached_scryfall_client():
 class ScryfallClient:
     def __init__(self):
         self.session = requests.Session()
+        self.session.headers.update({
+            "User-Agent": "ScryfallTelegramBot/2.6.0 (https://github.com/OliverHofkens/scryfall-telegram)"
+        })
 
     def _get(self, url: str, **params):
         resp = self.session.get(_BASE_URL + url, params=params)
