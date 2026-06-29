@@ -1,6 +1,6 @@
 [project]
 name = "scryfall-telegram"
-version = "2.6.0"
+version = "2.6.1"
 description = "Telegram bot backed by the Scryfall.com Magic:The Gathering API. Runs serverless."
 readme = "README.md"
 requires-python = ">= 3.13"
